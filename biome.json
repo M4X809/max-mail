@@ -1,0 +1,38 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"organizeImports": {
+		"enabled": false
+	},
+	"formatter": {
+		"enabled": false
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "off"
+			},
+			"style": {
+				"noNonNullAssertion": "off",
+				"useImportType": "warn",
+				"noParameterAssign": "off"
+			},
+			"a11y": {
+				"useKeyWithClickEvents": "off",
+				"useMediaCaption": "off",
+				"noSvgWithoutTitle": "off"
+			}
+		},
+		"ignore": [
+			"node_modules/**/*",
+			"biome.json",
+			"build/**/*",
+			".next/**/*",
+			"drizzle/**/*",
+			"*dockerignore*",
+			"**/*.css",
+			"**/*.log"
+		]
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"editor.codeActionsOnSave": {
+		// "source.organizeImports": "explicit",
+		"source.addMissingImports.ts": "explicit",
+		"source.fixAll.ts": "explicit"
+		// "source.fixAll.ts": "explicit"
+	},
+	"editor.formatOnSave": true,
+	"editor.inlineSuggest.enabled": true,
+	"editor.defaultFormatter": "biomejs.biome",
+	"markdownlint.config": {
+		"MD041": false
+	},
+	"css.customData": [".vscode/css_custom.json"],
+	"[markdown]": {
+		"editor.defaultFormatter": "yzhang.markdown-all-in-one"
+	},
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"cSpell.words": ["Squircle"]
+	// "css.lint.unknownAtRules": "error"
+}

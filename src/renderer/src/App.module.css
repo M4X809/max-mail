@@ -1,0 +1,5 @@
+.segIndicator {
+	background: linear-gradient(45deg, var(--mantine-color-blue-filled) 0%, var(--mantine-color-cyan-filled) 100%);
+	/* background: rgb(2,0,36);
+    background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(5,74,251,1) 0%, rgba(8,81,194,1) 37%, rgba(9,114,198,1) 54%, rgba(6,151,223,1) 100%); */
+}
