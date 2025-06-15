@@ -77,6 +77,7 @@ export default defineConfig({
 		build: {
 			emptyOutDir: true,
 			minify: true,
+			chunkSizeWarningLimit: Number.POSITIVE_INFINITY,
 			// copyPublicDir: true,
 		},
 		plugins: [react()],
