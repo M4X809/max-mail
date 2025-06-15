@@ -21,7 +21,7 @@ const runBuild = async () => {
 			await $`bun pm trust --all`;
 		} catch (err: any) {}
 		logger.await(chalk.blue("Building project, and publishing "));
-		await $`bun run build && electron-builder --win -p always`;
+		await $`bun run build && electron-builder --win -p always --config electron-builder.yml`;
 
 		logger.success(chalk.green("Build completed, Is Published!"));
 	} catch (err: any) {

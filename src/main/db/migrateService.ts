@@ -16,7 +16,7 @@ async function initDb() {
 
 	// get available migrations
 	const migrationDir = app.isPackaged
-		? path.join(process.resourcesPath, "resources", "migrations")
+		? path.join(process.resourcesPath, "migrations")
 		: path.join(__dirname, "resources", "migrations");
 	const migrationFiles = await readdir(migrationDir);
 

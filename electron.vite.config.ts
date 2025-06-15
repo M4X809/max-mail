@@ -13,6 +13,14 @@ export default defineConfig({
 						src: "resources/migrations",
 						dest: "resources",
 					},
+					{
+						src: "resources/icon.png",
+						dest: "resources",
+					},
+					{
+						src: "resources/mm_256.png",
+						dest: "resources",
+					},
 				],
 			}),
 		],
@@ -25,7 +33,7 @@ export default defineConfig({
 		assetsInclude: ["src/main/resources/**"],
 		build: {
 			sourcemap: "inline",
-			minify: false,
+			minify: true,
 
 			emptyOutDir: true,
 			watch: {
@@ -37,6 +45,7 @@ export default defineConfig({
 	preload: {
 		build: {
 			emptyOutDir: true,
+			minify: true,
 			// write: false,
 			lib: {
 				entry: "src/preload/index.ts",
@@ -64,6 +73,7 @@ export default defineConfig({
 		},
 		build: {
 			emptyOutDir: true,
+			minify: true,
 			// copyPublicDir: true,
 		},
 		plugins: [react()],

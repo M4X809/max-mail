@@ -5,4 +5,5 @@ out
 *.log*
 build
 drizzle
-.env*
+.env
+m4x809.pfx

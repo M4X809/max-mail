@@ -14,8 +14,7 @@ import log from "electron-log";
 import { autoUpdater } from "electron-updater";
 
 import open from "open";
-// @ts-ignore
-import icon from "../../resources/mm_256.png?asset";
+import icon from "../../resources/icon.png?asset";
 
 import { getWinSettings } from "./lib/settings.js";
 
@@ -129,7 +128,7 @@ if (!gotTheLock) {
 		// }
 
 		// Set app user model id for windows
-		electronApp.setAppUserModelId("com.max-mail.app");
+		electronApp.setAppUserModelId("com.electron.max-mail");
 		autoUpdater.forceDevUpdateConfig = true;
 		autoUpdater.autoDownload = false;
 		autoUpdater.autoInstallOnAppQuit = true;
