@@ -1,12 +1,3 @@
-/*
- * File: index.ts
- * Project: max-mail
- * File Created: 31.08.2024, 20:08:88
- *
- * Last Modified: 06.09.2024, 09:09:56
- * Modified By: MAX809
- */
-
 import { join } from "node:path";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import { BrowserWindow, app, ipcMain } from "electron";
@@ -22,7 +13,6 @@ import { store } from "./lib/store.js";
 import { initMailService, type MailService } from "./lib/mailService.js";
 
 import * as icp from "./icp/index.js";
-import { sendStatusToWindow } from "./lib/util.js";
 import db, { mail } from "./db/index.js";
 import { migrateService } from "./db/migrateService.js";
 
@@ -152,12 +142,7 @@ if (!gotTheLock) {
 
 		await initMailService();
 
-		// Initialize all IPC handlers
-		// Execute only callable exports
-		const ipcInitializers = Object.values(icp).filter(
-			(v): v is (params: Parameters<typeof icp.store>[0]) => unknown => typeof v === "function",
-		);
-		await Promise.all(ipcInitializers.map((init) => init({ ipcMain, app, window: mainWindow })));
+		await Promise.all(Object.values(icp).map((handler) => handler({ ipcMain, app, window: mainWindow })));
 
 		for (const mailService of mailServices.values()) {
 			await mailService.connect();

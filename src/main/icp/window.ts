@@ -17,8 +17,6 @@ export default function initWindowIpc({ ipcMain, app, window }: WindowIpcParams)
 
 	// saveBounds(mainWindow);
 	window.on("resized", () => {
-		console.log("resized");
-
 		saveBounds(window);
 	});
 	window.on("moved", () => {
@@ -30,7 +28,6 @@ export default function initWindowIpc({ ipcMain, app, window }: WindowIpcParams)
 	});
 
 	window.on("maximize", () => {
-		console.log("maximize");
 		saveBounds(window);
 	});
 }
