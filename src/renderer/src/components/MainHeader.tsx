@@ -1,23 +1,7 @@
-/*
- * File: MainHeader.tsx
- * Project: note-mark
- * File Created: 14.08.2024, 15:08:88
- *
- * Last Modified: 21.08.2024, 12:08:05
- * Modified By: MAX809
- */
-
-import {
-	faCog,
-	faWindowMaximize,
-	faWindowMinimize,
-	faWindowRestore,
-	faXmarkLarge,
-} from "@fortawesome/pro-duotone-svg-icons";
+import { faWindowMaximize, faWindowMinimize, faWindowRestore, faXmarkLarge } from "@fortawesome/pro-duotone-svg-icons";
 import { Box, Center, Group, Text, UnstyledButton } from "@mantine/core";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
 
 import { useAppStore } from "@renderer/stores/appStore";
 import { useConfigStore } from "@renderer/stores/configStore";
@@ -36,20 +20,6 @@ export const MainHeader = () => {
 					{/* STETINGS AND TITLE */}
 
 					<Group className="flex w-fit space-x-2 pl-1" gap={0} wrap="nowrap">
-						{/* <UnstyledButton
-							title="Settings"
-							tabIndex={-1}
-							component="button"
-							className="w-5 justify-center rounded-sm hover:bg-neutral-700/50 hover:text-white"
-							onClick={() => {
-								navigate("/settings");
-							}}
-						>
-							<Center>
-								<FontAwesomeIcon fixedWidth icon={faCog} />
-							</Center>
-						</UnstyledButton> */}
-
 						<Center>
 							<Text pr={10} ta={"left"} className="self-end" fz={12}>
 								MaxMail

@@ -1,7 +1,6 @@
-import { Divider, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { Resizable } from "react-resizable";
 import "react-resizable/css/styles.css";
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useLocalStorage } from "@mantine/hooks";
 

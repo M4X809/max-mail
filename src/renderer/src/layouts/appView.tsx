@@ -1,6 +1,6 @@
-import { faCalendar, faCalendarAlt, faCog, faInbox } from "@fortawesome/pro-duotone-svg-icons";
+import { faCalendarAlt, faCog, faInbox } from "@fortawesome/pro-duotone-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Container, Group, Stack } from "@mantine/core";
+import { Box, Stack } from "@mantine/core";
 import { MainHeader } from "@renderer/components/MainHeader";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";

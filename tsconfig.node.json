@@ -6,6 +6,9 @@
 		"module": "Node16",
 		"moduleDetection": "force",
 		"target": "ES2022",
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+
 		"lib": ["DOM", "DOM.Iterable", "ES2022", "ES2023"],
 		"composite": true,
 		"types": ["electron-vite/node"],
