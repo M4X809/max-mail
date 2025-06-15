@@ -12,6 +12,11 @@ const tabs = [
 		label: "Accounts",
 		path: "/settings/accounts",
 	},
+	{
+		icon: faCog,
+		label: "Update",
+		path: "/settings/update",
+	},
 ];
 
 export default function SettingsView() {

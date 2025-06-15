@@ -4,11 +4,21 @@ import type { Settings, WindowIpcParams } from "@shared/types.js";
 
 export default function initStoreIpc({ ipcMain, window }: WindowIpcParams) {
 	//  Store
-	ipcMain.handle("store:get", (_, key: keyof Settings) => store.get(key));
-	ipcMain.handle("store:set", (_, key: keyof Settings, value) => store.set(key, value));
-	ipcMain.handle("store:has", (_, key: keyof Settings) => store.has(key));
-	ipcMain.handle("store:clear", () => store.clear());
-	ipcMain.handle("store:delete", (_, key: keyof Settings) => store.delete(key));
+	ipcMain.handle("store:get", (_, key: keyof Settings) => {
+		return store.get(key);
+	});
+	ipcMain.handle("store:set", (_, key: keyof Settings, value) => {
+		return store.set(key, value);
+	});
+	ipcMain.handle("store:has", (_, key: keyof Settings) => {
+		return store.has(key);
+	});
+	ipcMain.handle("store:clear", () => {
+		return store.clear();
+	});
+	ipcMain.handle("store:delete", (_, key: keyof Settings) => {
+		return store.delete(key);
+	});
 
 	store.onDidChange("updateConfig", (newValue, _oldValue) => {
 		sendStatusToWindow(window, newValue ?? {}, "update-config-changed");

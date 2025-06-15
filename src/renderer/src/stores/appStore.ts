@@ -1,4 +1,3 @@
-import { mountStoreDevtool } from "simple-zustand-devtools";
 import { create } from "zustand";
 type AppState = {
 	// State
@@ -31,7 +30,3 @@ export const useAppStore = create<AppState>((set) => ({
 	setInterval: (value) => set(() => ({ interval: value })),
 	setTitle: (value) => set(() => ({ title: value ?? "max-mail" })),
 }));
-
-if (process.env.NODE_ENV === "development") {
-	mountStoreDevtool("App Store", useAppStore);
-}

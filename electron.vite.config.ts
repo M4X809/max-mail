@@ -69,6 +69,9 @@ export default defineConfig({
 				"@/components": resolve("src/renderer/src/components"),
 				"@/mocks": resolve("src/renderer/src/mocks"),
 				"@/pages": resolve("src/renderer/src/pages"),
+				"@/utils": resolve("src/renderer/src/lib/utils"),
+				"@/ui": resolve("src/renderer/src/components/ui"),
+				"@/lib": resolve("src/renderer/src/lib"),
 			},
 		},
 		build: {

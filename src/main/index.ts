@@ -152,6 +152,9 @@ if (!gotTheLock) {
 
 		await initMailService();
 
+		// Initialize all IPC handlers
+		await Promise.all(Object.values(icp).map((handler) => handler({ ipcMain, app, window: mainWindow })));
+
 		for (const mailService of mailServices.values()) {
 			await mailService.connect();
 
@@ -183,56 +186,6 @@ if (!gotTheLock) {
 
 		mainWindow.webContents.session.setSpellCheckerEnabled(true);
 		mainWindow.webContents.session.setSpellCheckerLanguages(["en-US", "de-DE"]);
-
-		for (const icpHandler of Object.values(icp)) {
-			icpHandler({ ipcMain, app, window: mainWindow });
-		}
-
-		// Updater
-		ipcMain.handle("update:version", () => autoUpdater.currentVersion);
-		ipcMain.handle("update:check", async () => {
-			const result = await autoUpdater.checkForUpdates();
-			const version = autoUpdater?.currentVersion;
-			return {
-				result,
-				version,
-			};
-		});
-		ipcMain.handle("update:download", async () => await autoUpdater.downloadUpdate());
-		ipcMain.handle("update:install", () => autoUpdater.quitAndInstall(false));
-
-		autoUpdater.on("download-progress", (progressObj) => {
-			let log_message = `Download speed: ${progressObj.bytesPerSecond}`;
-			log_message = `${log_message} - Downloaded ${progressObj.percent}%`;
-			log_message = `${log_message} (${progressObj.transferred}/${progressObj.total})`;
-			sendStatusToWindow(mainWindow, progressObj, "update-downloading");
-		});
-
-		autoUpdater.on("checking-for-update", () => {
-			sendStatusToWindow(mainWindow, "Checking for update...");
-		});
-		autoUpdater.on("update-available", (info) => {
-			sendStatusToWindow(mainWindow, `Update available ${info}`, "update-available");
-		});
-		autoUpdater.on("update-not-available", (info) => {
-			sendStatusToWindow(mainWindow, `Update not available. ${info}`, "update-not-available");
-		});
-		autoUpdater.on("error", (err) => {
-			sendStatusToWindow(mainWindow, `Error in auto-updater. ${err}`);
-		});
-
-		autoUpdater.on("update-downloaded", (info) => {
-			sendStatusToWindow(mainWindow, `Update downloaded. ${info}`, "update-downloaded");
-			store.set("appState.hasUpdated", true);
-		});
-
-		// if (process.env.NODE_ENV === "development") {
-		// 	mainWindow.webContents.openDevTools({
-		// 		mode: "right",
-		// 		activate: true,
-		// 		title: "DevTools - max-mail",
-		// 	});
-		// }
 
 		app.on("activate", (_, hasVisibleWindows) => {
 			if (hasVisibleWindows) return;
