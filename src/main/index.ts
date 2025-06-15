@@ -153,7 +153,11 @@ if (!gotTheLock) {
 		await initMailService();
 
 		// Initialize all IPC handlers
-		await Promise.all(Object.values(icp).map((handler) => handler({ ipcMain, app, window: mainWindow })));
+		// Execute only callable exports
+		const ipcInitializers = Object.values(icp).filter(
+			(v): v is (params: Parameters<typeof icp.store>[0]) => unknown => typeof v === "function",
+		);
+		await Promise.all(ipcInitializers.map((init) => init({ ipcMain, app, window: mainWindow })));
 
 		for (const mailService of mailServices.values()) {
 			await mailService.connect();

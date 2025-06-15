@@ -1,38 +1,63 @@
-// import "@mantine/core/styles.css";
-// import "@mantine/code-highlight/styles.css";
-// import "@mdxeditor/editor/style.css";
-// import "@mantine/dropzone/styles.css";
-// import "@mantine/spotlight/styles.css";
-import { MantineProvider, createTheme } from "@mantine/core";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { MantineProvider } from "@mantine/core";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
 
-import type { JSX } from "react";
+import { useEffect, type JSX } from "react";
 
-// import classes from "./App.module.css";
 import SettingsView from "./layouts/settingsView";
 import ConfigHandler from "./components/ConfigHandler";
 import MailView from "./layouts/mailView";
 import AppView from "./layouts/appView";
-import AccountSettingsPage from "./pages/settings/accout";
+import AccountSettingsPage from "./pages/settings/account";
 import SettingsUpdatePage from "./pages/settings/updater";
-import Updater from "./components/Updater";
+import Updater, { useUpdaterStore } from "./components/Updater";
 import { theme } from "./theme";
 import { Toaster } from "./components/Toaster";
+import { useConfigStore } from "@renderer/stores/configStore";
+import { useIdle, useInterval } from "@mantine/hooks";
+import { useAppStore } from "@renderer/stores/appStore";
 
 const App = (): JSX.Element => {
-	// useEffect(() => {
-	// 	if (autoCheckUpdates) startUpdateInterval();
-	// 	setIdle(idleState);
-	// 	setInterval(!idleState);
-	// }, [idleState, setIdle, setInterval, autoCheckUpdates, startUpdateInterval]);
+	const navigate = useNavigate();
 
-	// useEffect(() => {
-	// 	if (hasUpdated && showChangelogAfterUpdate && !downloaded) {
-	// 		window.store.set("appState.hasUpdated", false);
-	// 		navigate("/settings/update", { replace: true });
-	// 	}
-	// }, [hasUpdated, showChangelogAfterUpdate, navigate, downloaded]);
+	const setIdle = useAppStore((state) => state.setIdle);
+	const setInterval = useAppStore((state) => state.setInterval);
+
+	const autoCheckUpdates = useConfigStore((state) => state.updateConfig?.autoCheckUpdates ?? null);
+	const autoCheckInterval = useConfigStore((state) => state.updateConfig?.autoCheckInterval ?? 10);
+	const checkForUpdates = useUpdaterStore((state) => state.checkForUpdates);
+
+	const hasUpdated = useConfigStore((state) => state.appState?.hasUpdated ?? false);
+	const showChangelogAfterUpdate = useConfigStore((state) => state.updateConfig?.showChangelogAfterUpdate ?? null);
+	const downloaded = useUpdaterStore((state) => state.updateDownloaded);
+
+	const { start: startUpdateInterval } = useInterval(
+		() => {
+			// refreshNotes(notesFilter);
+			if (autoCheckUpdates) checkForUpdates();
+			console.log("checkForUpdates", autoCheckUpdates);
+		},
+		1000 * 60 * autoCheckInterval,
+		{ autoInvoke: true },
+	);
+
+	const idleState = useIdle(1000 * 10, {
+		initialState: false,
+	});
+
+	useEffect(() => {
+		if (autoCheckUpdates) startUpdateInterval();
+		setIdle(idleState);
+		setInterval(!idleState);
+	}, [idleState, setIdle, setInterval, autoCheckUpdates, startUpdateInterval]);
+
+	useEffect(() => {
+		if (hasUpdated && showChangelogAfterUpdate && !downloaded) {
+			window.store.set("appState.hasUpdated", false);
+			navigate("/settings/update", { replace: true });
+		}
+	}, [hasUpdated, showChangelogAfterUpdate, navigate, downloaded]);
+
 	const pathname = useLocation();
 	console.log("🚀 ~ appLayout.tsx:9 ~ AppLayout ~ pathname:", pathname);
 	return (

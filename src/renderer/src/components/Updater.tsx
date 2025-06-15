@@ -243,19 +243,16 @@ const Updater = () => {
 		});
 
 		window.updater.updateNotAvailable((_data) => {
-			// console.log("updateNotAvailable", data)
 			setUpdateAvailable(false);
 		});
 
 		window.updater.updateDownloaded((_data) => {
-			// console.log("updateDownloaded", data)
 			setUpdateDownloaded(true);
 			setIsDownloadPending(false);
-			// setIsDownloading(false)
+			setIsDownloading(false);
 		});
 
 		window.updater.updateDownloading((data) => {
-			// console.log("updateDownloading", data)
 			setDownloadingProgress(data);
 			setIsDownloading(true);
 			setIsDownloadPending(false);

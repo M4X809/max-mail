@@ -4,7 +4,7 @@ import {
 	Grid,
 	Group,
 	NumberInput,
-	NumberInputHandlers,
+	type NumberInputHandlers,
 	Progress,
 	Stack,
 	Switch,
@@ -34,7 +34,7 @@ export default function SettingsUpdatePage() {
 	const autoCheckUpdates = useConfigStore((state) => state.updateConfig?.autoCheckUpdates ?? null);
 	const autoDownloadUpdates = useConfigStore((state) => state.updateConfig?.autoDownloadUpdates ?? null);
 	const updateNotifications = useConfigStore((state) => state.updateConfig?.updateNotifications ?? null);
-	const autoCheckInterval = useConfigStore((state) => state.updateConfig.autoCheckInterval ?? null);
+	const autoCheckInterval = useConfigStore((state) => state.updateConfig?.autoCheckInterval ?? null);
 
 	// const changelog = useConfigStore((state) => state.changelog);
 
@@ -55,7 +55,7 @@ export default function SettingsUpdatePage() {
 
 	return (
 		<>
-			<Container size={"lg"} pt={15}>
+			<Container size={"lg"} pt={15} className="mx-auto max-w-screen-lg">
 				<Title>Update Center</Title>
 
 				{!!info && (

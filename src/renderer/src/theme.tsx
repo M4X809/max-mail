@@ -478,7 +478,7 @@ export const theme: MantineThemeOverride = {
 					timingFunction: "ease",
 				},
 				classNames: {
-					content: "bg-[rgb(255,255,255,0.1)] rounded-lg backdrop-blur-md",
+					content: "bg-[rgba(255,255,255,0.1)] rounded-lg backdrop-blur-md",
 					body: "text-white",
 				},
 			},
