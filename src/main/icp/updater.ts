@@ -1,7 +1,7 @@
-import { sendStatusToWindow } from "@/lib/util.js";
+import { sendStatusToWindow } from "@/main/lib/util.js";
 import type { WindowIpcParams } from "@shared/types.js";
 import { autoUpdater } from "electron-updater";
-import { store } from "@/lib/store.js";
+import { store } from "@/main/lib/store.js";
 
 export default function initUpdaterIpc({ ipcMain, window }: WindowIpcParams) {
 	// Updater

@@ -1,12 +1,3 @@
-/*
- * File: store.ts
- * Project: max-mail
- * File Created: 16.08.2024, 22:08:33
- *
- * Last Modified: 05.09.2024, 11:09:05
- * Modified By: MAX809
- */
-
 import { type Settings, configSchema } from "@shared/configSchema.js";
 import Store from "electron-store";
 import { getRootDir } from "./util.js";

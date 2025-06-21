@@ -1,8 +1,7 @@
-import { faInbox, faCalendarAlt, faCog, faUser, faMailbox, faArrowLeft } from "@fortawesome/pro-duotone-svg-icons";
+import { faCog, faUser, faArrowLeft } from "@fortawesome/pro-duotone-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Group, Stack } from "@mantine/core";
+import { Box, Container, Group, Stack } from "@mantine/core";
 import { MainHeader } from "@renderer/components/MainHeader";
-import { useConfigStore } from "@renderer/stores/configStore";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
@@ -50,9 +49,9 @@ export default function SettingsView() {
 						</Box>
 					</Stack>
 				</Box>
-				<Box className="h-full">
+				<Container className="mx-auto h-full w-[50dvw] min-w-[800px] py-10">
 					<Outlet />
-				</Box>
+				</Container>
 			</Group>
 		</Box>
 	);

@@ -15,6 +15,7 @@ import { initMailService, type MailService } from "./lib/mailService.js";
 import * as icp from "./icp/index.js";
 import db, { mail } from "./db/index.js";
 import { migrateService } from "./db/migrateService.js";
+import { loadCredentials } from "@/main/lib/accountManagement.js";
 
 export let mainWindow: BrowserWindow;
 export const mailServices: Map<string, MailService> = new Map();
@@ -141,30 +142,29 @@ if (!gotTheLock) {
 		mainWindow = createWindow();
 
 		await initMailService();
-
 		await Promise.all(Object.values(icp).map((handler) => handler({ ipcMain, app, window: mainWindow })));
 
-		for (const mailService of mailServices.values()) {
-			await mailService.connect();
+		// for (const mailService of mailServices.values()) {
+		// 	await mailService.connect();
 
-			const messages = await mailService.fetchMessages("INBOX", 10);
-			console.log(messages.length);
+		// 	const messages = await mailService.fetchMessages("INBOX", 10);
+		// 	console.log(messages.length);
 
-			await db
-				.insert(mail)
-				.values(
-					messages.map((m) => ({
-						id: m.uid,
-						from: m.parsed.from?.value.toString() ?? "",
-						to: Array.isArray(m.parsed.to) ? m.parsed.to.map((t) => t.text).join(", ") : (m.parsed.to?.text ?? "none"),
-						subject: m.parsed.subject ?? "",
-						createdAt: m.parsed.date?.getTime() ?? 0,
-						updatedAt: m.parsed.date?.getTime() ?? 0,
-					})),
-				)
-				.onConflictDoNothing({ target: mail.id })
-				.returning();
-		}
+		// 	await db
+		// 		.insert(mail)
+		// 		.values(
+		// 			messages.map((m) => ({
+		// 				id: m.uid,
+		// 				from: m.parsed.from?.value.toString() ?? "",
+		// 				to: Array.isArray(m.parsed.to) ? m.parsed.to.map((t) => t.text).join(", ") : (m.parsed.to?.text ?? "none"),
+		// 				subject: m.parsed.subject ?? "",
+		// 				createdAt: m.parsed.date?.getTime() ?? 0,
+		// 				updatedAt: m.parsed.date?.getTime() ?? 0,
+		// 			})),
+		// 		)
+		// 		.onConflictDoNothing({ target: mail.id })
+		// 		.returning();
+		// }
 
 		mainWindow.webContents.setWindowOpenHandler(({ url }) => {
 			console.info(url);

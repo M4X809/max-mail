@@ -26,6 +26,8 @@ export interface MailService {
 	watchMailbox: (mailbox: string, callback: (message: MailMessage) => void) => Promise<void>;
 	on: (event: string, listener: (...args: any[]) => void) => void;
 	off: (event: string, listener: (...args: any[]) => void) => void;
+	restart: () => Promise<boolean>;
+	getState: () => "disconnected" | "connected" | "authenticated";
 }
 
 export const createMailService = (config: MailConfig): MailService => {
@@ -179,6 +181,17 @@ export const createMailService = (config: MailConfig): MailService => {
 		});
 	};
 
+	const restart = async (): Promise<boolean> => {
+		await disconnect();
+		await connect();
+		console.log("🚀 ~ mailService.ts:186 ~ restart ~ client.state:", client?.state);
+		return true;
+	};
+
+	const getState = (): "disconnected" | "connected" | "authenticated" => {
+		return client?.state as "disconnected" | "connected" | "authenticated";
+	};
+
 	return {
 		connect,
 		disconnect,
@@ -187,6 +200,8 @@ export const createMailService = (config: MailConfig): MailService => {
 		watchMailbox,
 		on: (event: string, listener: (...args: any[]) => void) => events.on(event, listener),
 		off: (event: string, listener: (...args: any[]) => void) => events.off(event, listener),
+		restart,
+		getState,
 	};
 };
 
@@ -194,6 +209,10 @@ export async function initMailService() {
 	const credentials = await loadCredentials();
 	if (!credentials) {
 		throw new Error("No credentials found");
+	}
+
+	if (mailServices.size > 0) {
+		await Promise.all(Array.from(mailServices.values()).map((service) => service.disconnect()));
 	}
 
 	for (const credential of credentials) {
@@ -207,5 +226,6 @@ export async function initMailService() {
 				secure: true,
 			}),
 		);
+		await mailServices.get(credential.username)?.connect();
 	}
 }

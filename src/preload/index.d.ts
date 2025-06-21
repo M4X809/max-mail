@@ -26,7 +26,7 @@ import type {
 } from "@shared/types.js";
 import type { Key, ProgressInfo, UpdateCheckResult } from "electron-updater";
 import type { SemVer } from "semver";
-import type { MailCredentials } from "@/lib/accountManagement.js";
+import type { MailCredentials } from "@shared/types.js";
 
 // import type Store from "electron-store";
 
@@ -46,6 +46,17 @@ declare global {
 			windowMinimize: () => void;
 
 			getWindowMaximized: () => Promise<boolean>;
+
+			mail: {
+				getAccounts: () => Promise<(Omit<MailCredentials, "password"> & { connected: boolean })[] | null>;
+				getInboxes: (accountName: string) => Promise<string[]>;
+			};
+
+			account: {
+				setCredentials: (credentials: MailCredentials) => Promise<{ success: boolean; error?: string }>;
+				updateCredentials: (credentials: Partial<MailCredentials>) => Promise<{ success: boolean; error?: string }>;
+				deleteCredentials: (email: string) => Promise<{ success: boolean; error?: string }>;
+			};
 
 			removeAllListeners: (event: string) => void;
 			getEventListeners: (event: string) => void;

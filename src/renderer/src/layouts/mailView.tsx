@@ -3,6 +3,7 @@ import { Resizable } from "react-resizable";
 import "react-resizable/css/styles.css";
 import { Outlet } from "react-router-dom";
 import { useLocalStorage } from "@mantine/hooks";
+import { useQuery } from "@tanstack/react-query";
 
 export default function MainView() {
 	const [width, setWidth] = useLocalStorage({
@@ -21,6 +22,23 @@ export default function MainView() {
 		setWidth((prev) => ({ ...prev, inbox: size.width }));
 	};
 
+	const { data: accounts } = useQuery({
+		queryKey: ["accounts"],
+		queryFn: () => window.context.mail.getAccounts(),
+	});
+
+	const { data: inboxes } = useQuery({
+		queryKey: ["inboxes"],
+		queryFn: async ({ queryKey }) => {
+			const [_, username] = queryKey;
+			if (username) {
+				return await window.context.mail.getInboxes(username);
+			}
+			return [];
+		},
+		enabled: !!accounts?.length,
+	});
+
 	return (
 		<main className="bg-transparent">
 			<div className="flex h-full">
@@ -28,7 +46,7 @@ export default function MainView() {
 					width={width.accounts}
 					height={0}
 					onResize={onResizeAccounts}
-					draggableOpts={{ enableUserSelectHack: false }}
+					draggableOpts={{ enableUserSelectHack: true }}
 					minConstraints={[150, 0]}
 					maxConstraints={[250, 0]}
 					handle={
@@ -45,7 +63,7 @@ export default function MainView() {
 					width={width.inbox}
 					height={0}
 					onResize={onResizeInbox}
-					draggableOpts={{ enableUserSelectHack: false }}
+					draggableOpts={{ enableUserSelectHack: true }}
 					minConstraints={[200, 0]}
 					maxConstraints={[300, 0]}
 					handle={

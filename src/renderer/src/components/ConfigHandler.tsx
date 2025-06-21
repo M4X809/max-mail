@@ -1,12 +1,3 @@
-/*
- * File: ConfigHandler.tsx
- * Project: note-mark
- * File Created: 21.08.2024, 12:08:53
- *
- * Last Modified: 03.09.2024, 09:09:12
- * Modified By: MAX809
- */
-
 import { useEffect } from "react";
 import { useConfigStore } from "@renderer/stores/configStore";
 

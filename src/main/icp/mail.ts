@@ -1,7 +1,7 @@
 import type { WindowIpcParams } from "@shared/types.js";
 
-import { mailServices } from "@/index.js";
-import { getAccounts } from "@/lib/accountManagement.js";
+import { mailServices } from "@/main/index.js";
+import { getAccounts } from "@/main/lib/accountManagement.js";
 
 export default function initMailIpc({ ipcMain }: WindowIpcParams) {
 	// get accounts

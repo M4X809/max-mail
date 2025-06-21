@@ -7,6 +7,7 @@ import { useAppStore } from "@renderer/stores/appStore";
 import { useConfigStore } from "@renderer/stores/configStore";
 
 import pkg from "../../../../package.json";
+import { twMerge } from "tailwind-merge";
 
 export const MainHeader = () => {
 	const title = useAppStore((state) => state.title);
@@ -24,7 +25,11 @@ export const MainHeader = () => {
 							<Text pr={10} ta={"left"} className="self-end" fz={12}>
 								MaxMail
 							</Text>
-							<Text ta={"end"} fz={11} className="self-end" c={process.env.NODE_ENV === "development" ? "darkred" : "dimmed"}>
+							<Text
+								ta={"end"}
+								fz={11}
+								className={twMerge("self-end", process.env.NODE_ENV === "development" ? "text-pink-500" : "text-violet-300")}
+							>
 								v{pkg.version}
 							</Text>
 						</Center>

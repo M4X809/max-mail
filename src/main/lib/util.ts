@@ -1,12 +1,3 @@
-/*
- * File: util.ts
- * Project: max-mail
- * File Created: 30.08.2024, 10:08:18
- *
- * Last Modified: 05.09.2024, 10:09:90
- * Modified By: MAX809
- */
-
 import { homedir } from "node:os";
 import path from "node:path";
 import { appDirectoryName } from "@shared/constants.js";

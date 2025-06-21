@@ -1,12 +1,3 @@
-/*
- * File: settings.ts
- * Project: max-mail
- * File Created: 15.08.2024, 21:08:70
- *
- * Last Modified: 03.09.2024, 10:09:05
- * Modified By: MAX809
- */
-
 import type { BrowserWindow } from "electron";
 import { store } from "./store.js";
 

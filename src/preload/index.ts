@@ -1,4 +1,4 @@
-import type { MailCredentials } from "@/lib/accountManagement.js";
+import type { MailCredentials } from "@shared/types.js";
 import type { Settings } from "@shared/types.js";
 import { contextBridge, ipcRenderer } from "electron";
 
@@ -16,6 +16,19 @@ try {
 		windowToggleSize: () => ipcRenderer.invoke("window-toggle-size"),
 		windowMinimize: () => ipcRenderer.invoke("window-minimize"),
 		getWindowMaximized: () => ipcRenderer.invoke("window-get-size"),
+
+		mail: {
+			getAccounts: () => ipcRenderer.invoke("mail:get-accounts"),
+			getInboxes: (accountName: string) => ipcRenderer.invoke("mail:get-inboxes", accountName),
+		},
+
+		account: {
+			setCredentials: (credentials: MailCredentials) => ipcRenderer.invoke("account:setCredentials", credentials),
+			updateCredentials: (credentials: Partial<MailCredentials>) =>
+				ipcRenderer.invoke("account:updateCredentials", credentials),
+			deleteCredentials: (email: string) => ipcRenderer.invoke("account:deleteCredentials", email),
+			// clearCredentials: () => ipcRenderer.invoke("account:clearCredentials"),
+		},
 
 		removeAllListeners: (event: string) => {
 			if (!event) return console.error("Event is required");

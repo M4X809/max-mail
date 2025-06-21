@@ -1,5 +1,5 @@
-import { store } from "@/lib/store.js";
-import { sendStatusToWindow } from "@/lib/util.js";
+import { store } from "@/main/lib/store.js";
+import { sendStatusToWindow } from "@/main/lib/util.js";
 import type { Settings, WindowIpcParams } from "@shared/types.js";
 
 export default function initStoreIpc({ ipcMain, window }: WindowIpcParams) {

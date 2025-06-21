@@ -1,6 +1,7 @@
 import { MantineProvider } from "@mantine/core";
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { useEffect, type JSX } from "react";
 
@@ -16,6 +17,8 @@ import { Toaster } from "./components/Toaster";
 import { useConfigStore } from "@renderer/stores/configStore";
 import { useIdle, useInterval } from "@mantine/hooks";
 import { useAppStore } from "@renderer/stores/appStore";
+
+const queryClient = new QueryClient();
 
 const App = (): JSX.Element => {
 	const navigate = useNavigate();
@@ -58,28 +61,28 @@ const App = (): JSX.Element => {
 		}
 	}, [hasUpdated, showChangelogAfterUpdate, navigate, downloaded]);
 
-	const pathname = useLocation();
-	console.log("🚀 ~ appLayout.tsx:9 ~ AppLayout ~ pathname:", pathname);
 	return (
-		<MantineProvider theme={theme} defaultColorScheme="dark">
-			<ModalsProvider>
-				<ConfigHandler />
-				<Toaster expand visibleToasts={5} richColors />
-				<Updater />
-				<Routes>
-					<Route path="/settings/*" element={<SettingsView />}>
-						<Route path="accounts" element={<AccountSettingsPage />} />
-						<Route path="update" element={<SettingsUpdatePage />} />
-					</Route>
-					<Route element={<AppView />}>
-						<Route path="/mails" index element={<MailView />} />
-						<Route path="/mails/:mailId" index element={<MailView />} />
-						<Route path="/calendar" index element={<div>calendar</div>} />
-						<Route path="/*" index element={<Navigate to="/mails" replace />} />
-					</Route>
-				</Routes>
-			</ModalsProvider>
-		</MantineProvider>
+		<QueryClientProvider client={queryClient}>
+			<MantineProvider theme={theme} defaultColorScheme="dark">
+				<ModalsProvider>
+					<ConfigHandler />
+					<Toaster expand visibleToasts={5} richColors />
+					<Updater />
+					<Routes>
+						<Route path="/settings/*" element={<SettingsView />}>
+							<Route path="accounts" element={<AccountSettingsPage />} />
+							<Route path="update" element={<SettingsUpdatePage />} />
+						</Route>
+						<Route element={<AppView />}>
+							<Route path="/mails" index element={<MailView />} />
+							<Route path="/mails/:mailId" index element={<MailView />} />
+							<Route path="/calendar" index element={<div>calendar</div>} />
+							<Route path="/*" index element={<Navigate to="/mails" replace />} />
+						</Route>
+					</Routes>
+				</ModalsProvider>
+			</MantineProvider>
+		</QueryClientProvider>
 	);
 };
 

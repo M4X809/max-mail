@@ -17,3 +17,10 @@ export interface WindowIpcParams {
 	app: Electron.App;
 	window: Electron.BrowserWindow;
 }
+
+export interface MailCredentials {
+	host: string;
+	port: number;
+	username: string;
+	password: string;
+}

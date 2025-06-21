@@ -1,4 +1,3 @@
-// "use client";
 // import {
 // 	ActionIcon,
 // 	Autocomplete,
@@ -244,7 +243,6 @@
 // 	},
 // };
 
-"use client";
 import {
 	ActionIcon,
 	Autocomplete,
@@ -256,6 +254,7 @@ import {
 	Modal,
 	MultiSelect,
 	NumberInput,
+	PasswordInput,
 	Pill,
 	Select,
 	Switch,
@@ -287,9 +286,6 @@ export const theme: MantineThemeOverride = {
 				variant: "default",
 				className: "bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.12)] text-white",
 			},
-			// classNames: {
-			// 	root: "bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.12)] text-white",
-			// },
 			classNames(_, props) {
 				return {
 					root: twMerge("bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.12)] text-white", props.className),
@@ -333,6 +329,18 @@ export const theme: MantineThemeOverride = {
 			},
 		}),
 		Input: Input.extend({
+			defaultProps: {
+				styles: {
+					wrapper: {
+						background: "transparent",
+					},
+					input: {
+						background: "rgba(255,255,255,0.05)",
+					},
+				},
+			},
+		}),
+		PasswordInput: PasswordInput.extend({
 			defaultProps: {
 				styles: {
 					wrapper: {

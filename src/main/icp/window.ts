@@ -1,4 +1,4 @@
-import { saveBounds } from "@/lib/settings.js";
+import { saveBounds } from "@/main/lib/settings.js";
 import type { WindowIpcParams } from "@shared/types.js";
 
 export default function initWindowIpc({ ipcMain, app, window }: WindowIpcParams) {
