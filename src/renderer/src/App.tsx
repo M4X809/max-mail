@@ -17,6 +17,7 @@ import { Toaster } from "./components/Toaster";
 import { useConfigStore } from "@renderer/stores/configStore";
 import { useIdle, useInterval } from "@mantine/hooks";
 import { useAppStore } from "@renderer/stores/appStore";
+import BackendNavigator from "@renderer/components/BackendNavigator";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const App = (): JSX.Element => {
 					<ConfigHandler />
 					<Toaster expand visibleToasts={5} richColors />
 					<Updater />
+					<BackendNavigator />
 					<Routes>
 						<Route path="/settings/*" element={<SettingsView />}>
 							<Route path="accounts" element={<AccountSettingsPage />} />

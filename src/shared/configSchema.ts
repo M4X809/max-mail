@@ -45,6 +45,9 @@ export interface Settings {
 		encryptedCredentials: string;
 		name: string;
 	}>;
+	notifications: {
+		lastUpdateNotification: string;
+	};
 }
 
 export const configSchema: Schema<Settings> = {
@@ -179,6 +182,18 @@ export const configSchema: Schema<Settings> = {
 				name: {
 					type: "string",
 				},
+			},
+		},
+	},
+	notifications: {
+		type: "object",
+		default: {
+			lastUpdateNotification: "",
+		},
+		properties: {
+			lastUpdateNotification: {
+				type: "string",
+				default: "",
 			},
 		},
 	},

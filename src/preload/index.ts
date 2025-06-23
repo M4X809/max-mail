@@ -12,6 +12,8 @@ try {
 		os: process.platform,
 		// Folder IO
 
+		navigate: (callback: (arg0: any) => void) => ipcRenderer.on("navigate", (_, data) => callback(data)),
+
 		windowClose: () => ipcRenderer.invoke("window-close"),
 		windowToggleSize: () => ipcRenderer.invoke("window-toggle-size"),
 		windowMinimize: () => ipcRenderer.invoke("window-minimize"),

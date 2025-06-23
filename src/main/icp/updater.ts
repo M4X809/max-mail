@@ -2,8 +2,11 @@ import { sendStatusToWindow } from "@/main/lib/util.js";
 import type { WindowIpcParams } from "@shared/types.js";
 import { autoUpdater } from "electron-updater";
 import { store } from "@/main/lib/store.js";
+import { Notification } from "electron";
+import icon from "@/assets/icon.ico?asset";
+import log from "electron-log";
 
-export default function initUpdaterIpc({ ipcMain, window }: WindowIpcParams) {
+export default async function initUpdaterIpc({ ipcMain, window }: WindowIpcParams) {
 	// Updater
 	ipcMain.handle("update:version", () => autoUpdater.currentVersion);
 	ipcMain.handle("update:check", async () => {
@@ -28,6 +31,29 @@ export default function initUpdaterIpc({ ipcMain, window }: WindowIpcParams) {
 		sendStatusToWindow(window, "Checking for update...");
 	});
 	autoUpdater.on("update-available", (info) => {
+		console.log("🚀 ~ updater.ts:33 ~ autoUpdater.on ~ info:", info);
+		if (info.releaseDate !== store.get("notifications.lastUpdateNotification")) {
+			const notification = new Notification({
+				icon: icon,
+
+				title: "New MaxMail Update available",
+				body: `Update available ${info.version}\nClick to download`,
+
+				urgency: "low",
+				timeoutType: "never",
+			});
+
+			store.set("notifications.lastUpdateNotification", info.releaseDate);
+
+			notification.on("click", (e) => {
+				autoUpdater.downloadUpdate();
+				sendStatusToWindow(window, "/settings/update", "navigate");
+			});
+			notification.show();
+		} else {
+			log.warn("🚀 ~ updater.ts:54 ~ autoUpdater.on ~ info:", "Message not shown");
+		}
+
 		sendStatusToWindow(window, `Update available ${info}`, "update-available");
 	});
 	autoUpdater.on("update-not-available", (info) => {

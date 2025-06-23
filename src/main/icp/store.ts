@@ -2,7 +2,7 @@ import { store } from "@/main/lib/store.js";
 import { sendStatusToWindow } from "@/main/lib/util.js";
 import type { Settings, WindowIpcParams } from "@shared/types.js";
 
-export default function initStoreIpc({ ipcMain, window }: WindowIpcParams) {
+export default async function initStoreIpc({ ipcMain, window }: WindowIpcParams) {
 	//  Store
 	ipcMain.handle("store:get", (_, key: keyof Settings) => {
 		return store.get(key);

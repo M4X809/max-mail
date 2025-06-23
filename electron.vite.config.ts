@@ -14,7 +14,7 @@ export default defineConfig({
 						dest: "resources",
 					},
 					{
-						src: "resources/icon.png",
+						src: "resources/icon.ico",
 						dest: "resources",
 					},
 					{
@@ -29,6 +29,7 @@ export default defineConfig({
 				"@/lib": resolve("src/main/lib"),
 				"@/main": resolve("src/main"),
 				"@shared": resolve("src/shared"),
+				"@/assets": resolve("resources"),
 			},
 		},
 		assetsInclude: ["src/main/resources/**"],

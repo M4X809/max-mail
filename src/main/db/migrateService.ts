@@ -1,5 +1,5 @@
 import { ensureDir, ensureFile, readFile, readdir, stat, writeFile, copy } from "fs-extra";
-import { getRootDir, tryCatch } from "@/lib/util.js";
+import { getRootDir, tryCatch } from "@/main/lib/util.js";
 import path from "node:path";
 import { app } from "electron";
 import db from "./index.js";

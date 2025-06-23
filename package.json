@@ -1,6 +1,6 @@
 {
 	"name": "max-mail",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "An intuitive and powerful email client",
 	"main": "./out/main/index.js",
 	"author": "@m4x809",
@@ -61,6 +61,7 @@
 		"cx": "^25.6.3",
 		"drizzle-orm": "^0.44.2",
 		"electron-builder-squirrel-windows": "^26.0.12",
+		"electron-devtools-installer": "^4.0.0",
 		"electron-log": "^5.4.1",
 		"electron-store": "^10.1.0",
 		"imap": "^0.8.19",

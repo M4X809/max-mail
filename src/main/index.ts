@@ -5,7 +5,7 @@ import log from "electron-log";
 import { autoUpdater } from "electron-updater";
 
 import open from "open";
-import icon from "../../resources/icon.png?asset";
+import icon from "../../resources/icon.ico?asset";
 
 import { getWinSettings } from "./lib/settings.js";
 
@@ -13,12 +13,20 @@ import { store } from "./lib/store.js";
 import { initMailService, type MailService } from "./lib/mailService.js";
 
 import * as icp from "./icp/index.js";
-import db, { mail } from "./db/index.js";
+// import db, { mail } from "./db/index.js";
 import { migrateService } from "./db/migrateService.js";
-import { loadCredentials } from "@/main/lib/accountManagement.js";
+
+import { installExtension, REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 
 export let mainWindow: BrowserWindow;
 export const mailServices: Map<string, MailService> = new Map();
+
+// Promise that resolves once all IPC handlers have been loaded
+let resolveIpcHandlers: (() => void) | undefined;
+export const ipcHandlersLoaded = new Promise<void>((resolve) => {
+	resolveIpcHandlers = resolve;
+});
+
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
@@ -117,6 +125,7 @@ if (!gotTheLock) {
 		// 		"C:/Users/jp/AppData/Local/Packages/TheBrowserCompany.Arc_ttt1ap7aakyb4/LocalCache/Local/Arc/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/5.3.1_0",
 		// 	);
 		// }
+		// await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS, "igiofjnckcagmjgdoaakafngegecjnkj"]);
 
 		// Set app user model id for windows
 		electronApp.setAppUserModelId("com.electron.max-mail");
@@ -139,10 +148,21 @@ if (!gotTheLock) {
 		//      getDebugCss(...args),
 		//   );
 
+		// Initialize mail service first
+		await initMailService();
+
+		// Create window but don't show it yet
 		mainWindow = createWindow();
 
-		await initMailService();
+		// Initialize all ICP handlers before the window content can make IPC calls
 		await Promise.all(Object.values(icp).map((handler) => handler({ ipcMain, app, window: mainWindow })));
+
+		// Resolve the IPC handlers loaded promise
+		if (resolveIpcHandlers) {
+			resolveIpcHandlers();
+		}
+
+		console.log("All ICP handlers initialized and ready");
 
 		// for (const mailService of mailServices.values()) {
 		// 	await mailService.connect();

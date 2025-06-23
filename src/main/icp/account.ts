@@ -7,7 +7,7 @@ import {
 } from "@/main/lib/accountManagement.js";
 import type { WindowIpcParams } from "@shared/types.js";
 
-export default function initAccountIpc({ ipcMain }: WindowIpcParams) {
+export default async function initAccountIpc({ ipcMain }: WindowIpcParams) {
 	ipcMain.handle("account:setCredentials", (_event, credentials) => {
 		return setCredentials(credentials);
 	});

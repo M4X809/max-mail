@@ -14,6 +14,7 @@ import {
 import { useUpdaterStore } from "@renderer/components/Updater";
 import { useConfigStore } from "@renderer/stores/configStore";
 import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 
 export default function SettingsUpdatePage() {
 	const info = useUpdaterStore((state) => state.versionInfo);
@@ -45,6 +46,7 @@ export default function SettingsUpdatePage() {
 		if (!updateAvailable && autoCheckUpdates) {
 			checkForUpdates();
 		}
+		toast.dismiss();
 	}, []);
 
 	const handlersRef = useRef<NumberInputHandlers>(null);

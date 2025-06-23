@@ -1,7 +1,6 @@
 import { homedir } from "node:os";
 import path from "node:path";
 import { appDirectoryName } from "@shared/constants.js";
-import log from "electron-log";
 
 const env = process.env.NODE_ENV ?? "production";
 
@@ -16,7 +15,7 @@ export const getRootDir = (dirs?: string[]) => {
 };
 
 export function sendStatusToWindow(win: Electron.BrowserWindow, data: string | number | object, event?: string) {
-	log.info(data);
+	// log.info(data);
 	win.webContents.send(event ?? "message", data);
 }
 

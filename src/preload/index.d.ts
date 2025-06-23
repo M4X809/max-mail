@@ -47,6 +47,8 @@ declare global {
 
 			getWindowMaximized: () => Promise<boolean>;
 
+			navigate: (callback: (path: string) => void) => void;
+
 			mail: {
 				getAccounts: () => Promise<(Omit<MailCredentials, "password"> & { connected: boolean })[] | null>;
 				getInboxes: (accountName: string) => Promise<string[]>;

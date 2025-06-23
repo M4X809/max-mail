@@ -1,7 +1,7 @@
 import { saveBounds } from "@/main/lib/settings.js";
 import type { WindowIpcParams } from "@shared/types.js";
 
-export default function initWindowIpc({ ipcMain, app, window }: WindowIpcParams) {
+export default async function initWindowIpc({ ipcMain, app, window }: WindowIpcParams) {
 	ipcMain.handle("window-close", () => app.quit());
 	ipcMain.handle("window-maximize", () => window.maximize());
 	ipcMain.handle("window-toggle-size", () => {

@@ -3,7 +3,7 @@ import type { WindowIpcParams } from "@shared/types.js";
 import { mailServices } from "@/main/index.js";
 import { getAccounts } from "@/main/lib/accountManagement.js";
 
-export default function initMailIpc({ ipcMain }: WindowIpcParams) {
+export default async function initMailIpc({ ipcMain }: WindowIpcParams) {
 	// get accounts
 	ipcMain.handle("mail:get-accounts", async () => {
 		const accounts = await getAccounts();
